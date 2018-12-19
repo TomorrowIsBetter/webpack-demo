@@ -1,0 +1,27 @@
+{
+    "plugins": ["react"],
+    "rules": {
+        "no-console": "off",
+        "no-empty-function": "off",
+        "comma-dangle": ["error", "always-multiline"],
+        "react/no-deprecated": "warn",
+        "prefer-const": 2,
+        "no-alert": 2,
+        "no-else-return": 2,
+        "object-curly-spacing": ["error", "always"],
+        "no-var": 2
+    },
+    "parserOptions": {
+        "ecmaVersion": 8
+    },
+    "extends": [
+        "ttdefault",
+        "plugin:react/recommended"
+    ],
+    "parser": "babel-eslint",
+    "settings": {
+        "react": {
+            "version": "16.0"
+        }
+    }
+}
