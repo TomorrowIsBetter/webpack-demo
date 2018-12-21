@@ -9,9 +9,6 @@ const React = require('react');
 const { renderToString } = require('react-dom/server');
 
 
-// 加入webpack中间件
-
-
 // body-parser是对发出请求做出处理，处理编码等
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -19,25 +16,19 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.set('view engine', 'hbs');
 app.set('view', path.resolve(__dirname, '../output'));
 
+
+// 配置webpack
+// const webpack = require('webpack');
+// const webpackConfigDev = require('../webpack.config');
+// const webpackConfigProd = require('../webpack.prod.config');
+// const webpackConfig = process.env.Dev !== 'production' ? webpackConfigDev : webpackConfigProd;
+// const webpackComplier = webpack(webpackConfig);
+
 if (process.env.Dev !== 'production') {
-    // 配置webpack
-    const webpack = require('webpack');
-    const webpackConfigDev = require('../webpack.config');
-    const webpackConfigProd = require('../webpack.prod.config');
-    const webpackConfig = process.env.Dev !== 'production' ? webpackConfigDev : webpackConfigProd;
-    const webpackComplier = webpack(webpackConfig);
-
     // 服务端渲染
+    let template = fs.readFileSync(path.resolve(__dirname, './view/index.html'), 'utf8');
     const html = renderToString(<App />);
-    const template = fs.readFileSync(path.resolve(__dirname, './view/index.html'), (err, htmldata) => {
-        const tmp =  htmldata.replace(
-            '<div id="main"></div>',
-            `<div id="main">${html}</div>`
-        );
-        console.log('tmp', tmp);
-        return tmp;
-    }, 'utf8');
-
+    template = template.replace('<div id="main"></div>', `<div id="main">${html}</div>`);
 
     app.get('*', function (req, res) {
         res.set('Content-Type', 'text/html');
@@ -45,7 +36,6 @@ if (process.env.Dev !== 'production') {
     });
 
     // 客户端渲染
-
     // const middleware = require('webpack-dev-middleware')(webpackComplier);
     // app.use(middleware);
     // app.use(require('webpack-hot-middleware')(webpackComplier));
