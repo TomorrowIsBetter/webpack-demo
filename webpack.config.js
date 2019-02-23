@@ -7,7 +7,8 @@ module.exports = {
     devtool: 'cheap-module-source-map',
     output: {
         path: path.resolve(__dirname, './output'),
-        filename: 'output.[hash:8].js',
+        publicPath: '/output',
+        filename: 'index.js',
     },
     module: {
         rules: [
