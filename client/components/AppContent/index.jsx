@@ -1,38 +1,39 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import './index.less'
+import './index.less';
 class App extends Component {
-    constructor(props) {
+    constructor (props) {
         super(props);
         console.log('props', props);
     }
-    static async getInitialProps() {
 
-        let data = await new Promise((resolve,reject)=>{
+    static async getInitialProps () {
+
+        const data = await new Promise((resolve, reject)=>{
             setTimeout(() => {
                 resolve({
-                    name:'00233222'
-                })
+                    name: '00233222',
+                });
             }, 3000);
-            
-        })
-        return data
-       
+
+        });
+        return data;
+
     }
 
-    componentDidMount() {
+    componentDidMount () {
         console.log('this.props', this.props);
     }
 
-    handleClick() {
+    handleClick () {
         console.log('done done', this.props);
     }
-    handleBtnClick() {
+    handleBtnClick () {
         console.log('点击的是一个按钮');
     }
-    render() {
+    render () {
         return (
-            <div className="App" >
+            <div className="app-container" >
                 <header className="App-header" onClick={() => this.handleClick()}>
                     <h1 className="App-title">Welcome to React</h1>
                     <button onClick={() => this.handleBtnClick()}>这里是一个按钮</button>

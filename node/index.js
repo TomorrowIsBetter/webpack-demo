@@ -3,13 +3,12 @@ const fs = require('fs');
 const path = require('path');
 // 使node支持JSX语法和es6语法
 const babelConfig = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../.babelrc')));
-require('@babel/register')(Object.assign(babelConfig,{
+require('@babel/register')(Object.assign(babelConfig, {
 }));
+
 const bodyParser = require('body-parser');
 const app = express();
 const App = require('../client/components/AppContent/index.jsx').default;
-
-
 
 
 const React = require('react');
@@ -31,8 +30,6 @@ const webpackConfigProd = require('../webpack.prod.config');
 const webpackConfig = process.env.NODE_ENV !== 'production' ? webpackConfigDev : webpackConfigProd;
 const webpackComplier = webpack(webpackConfig);
 
-// express中提供静态文件
-// app.use('/output', express.static(middleware.fileSystem));
 app.use(express.static(path.resolve(__dirname, '../ouput')));
 
 if (process.env.NODE_ENV !== 'production') {
@@ -41,18 +38,18 @@ if (process.env.NODE_ENV !== 'production') {
     let template = fs.readFileSync(path.resolve(__dirname, '../output/index.html'), 'utf8');
     // 服务端渲染（往里面添加数据）: 相当于创建了一个批量生产app组件但是没有添加数据的工厂函数，然后再往里面塞数据
 
- 
+
     app.get('*', function (req, res) {
 
-        let promise = App.getInitialProps()
+        const promise = App.getInitialProps();
         promise.then(data => {
             const factory = React.createFactory(App);
             const html = renderToString(factory(data));
             template = template.replace('<div id="main"></div>', `<div id="main">${html}</div>`);
             res.set('Content-Type', 'text/html');
             res.send(template);
-        })
-      
+        });
+
     });
 
 
@@ -60,9 +57,8 @@ if (process.env.NODE_ENV !== 'production') {
     // const html = renderToString(<App />);
 
 
-
 } else {
-    //这里跑单页面
+    // 这里跑单页面
     app.use(express.static(__dirname + '/output'));
     app.get('*', function (req, res) {
         res.sendFile(path.join(__dirname, 'ouput/index.html'));

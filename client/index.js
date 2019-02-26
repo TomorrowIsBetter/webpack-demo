@@ -11,10 +11,10 @@ import App from './components/AppContent/index.jsx';
 //     );
 // }
 
-// hydrate(
-//     <div className="app">
-//         <App />
-//     </div>, document.getElementById('main')
-// );
+hydrate(
+    <div className="app">
+        <App />
+    </div>, document.getElementById('main')
+);
 
-module.exports = App;
+// export default App;
