@@ -41,6 +41,7 @@ if (process.env.NODE_ENV !== 'production') {
 
     app.get('*', function (req, res) {
 
+        // 添加数据没有用，@TODO
         const promise = App.getInitialProps();
         promise.then(data => {
             const factory = React.createFactory(App);
