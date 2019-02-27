@@ -2,7 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const webpack = require('webpack');
-
+const CleanWebpackPlugin = require('clean-webpack-plugin')
 
 // 分离css文件需要注意：MiniCssExtractPlugin这个不能和style-loader同用，因为后者是把css通过内联放到html里面
 
@@ -23,6 +23,7 @@ module.exports = {
         ],
     },
     plugins: [
+        new CleanWebpackPlugin([path.resolve(__dirname, '../output')]),
         new HtmlWebpackPlugin({
             title: 'webpack-demo-init',
             template: path.resolve(__dirname, './client/index.html'),
