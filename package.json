@@ -5,10 +5,10 @@
   "main": "index.js",
   "scripts": {
     "dev": "webpack-dev-server --mode=development",
-    "webpack": "webpack --mode=development",
+    "webpack": "cross-env BABEL_ENV=browser webpack --mode=development",
     "build": "webpack --mode=production --config webpack.prod.config.js",
     "clean": "rm -rf ./output",
-    "node": "BABEL_ENV=node NODE_ENV=development nodemon ./node/index.js"
+    "node": "cross-env BABEL_ENV=node NODE_ENV=development nodemon ./node/index.js"
   },
   "author": "",
   "license": "ISC",
@@ -16,7 +16,9 @@
     "@babel/preset-react": "^7.0.0",
     "@babel/register": "^7.0.0",
     "@babel/runtime": "^7.3.1",
+    "babel-plugin-transform-ensure-ignore": "^0.1.0",
     "babel-plugin-transform-require-ignore": "^0.1.1",
+    "cross-env": "^5.2.0",
     "css-loader": "^1.0.1",
     "express": "^4.16.4",
     "file-loader": "^2.0.0",

@@ -4,11 +4,18 @@
         "@babel/preset-react"
     ],
     "plugins": [
-        ["@babel/plugin-transform-runtime"],
-        [
-            "babel-plugin-transform-require-ignore", {
-                "extensions": [".less", ".sass", ".css"]
-            }
-        ]
-    ]
+        "@babel/plugin-transform-runtime"
+    ],
+    "env": {
+        "node": {
+            "plugins": [
+                [ 
+                    "babel-plugin-transform-require-ignore", {
+                        "extensions": [ ".scss", ".less" ]
+                    }
+                ],
+                "babel-plugin-transform-ensure-ignore"
+            ]
+        }
+    }
 }
