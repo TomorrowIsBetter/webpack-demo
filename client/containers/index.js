@@ -1,22 +1,23 @@
 import React from 'react';
+import App from '../components/AppContent/index.jsx';
 import { hydrate, render } from 'react-dom';
-
-class launcher {
+class Launcher {
     constructor (App) {
         this.App = App;
     }
+
     render () {
         const isBrowser = process.env.TARGET !== 'node';
         if (isBrowser) {
             const bootstrap = window.isRendered ? hydrate : render;
             bootstrap(
-                <div className="app">
-                    <App />
-                </div>, document.getElementById('main')
+                <App {...window.data}/>, document.getElementById('main')
             );
         }
         return this.App;
     }
 }
 
-export default launcher;
+const launcher = new Launcher(App);
+
+export default launcher.render();

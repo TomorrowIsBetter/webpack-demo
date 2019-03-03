@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content=" script-src * 'unsafe-inline' ; ">
+    <!-- 之前copy的时候用了这个莫名其妙的头。限制了域名，除非是同域，否则不能内联script -->
+    <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self'; font-src 'self' data: fonts.gstatic.com;"> -->
+    <title>webpack-demo</title>
+</head>
+<body>
+    <div id="main"></div>
+</body>
+<script>
+    var name = 'hello';
+</script>
+</html>
