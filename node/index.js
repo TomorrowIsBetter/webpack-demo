@@ -27,7 +27,6 @@ if (process.env.NODE_ENV !== 'production') {
 
         const data = { name: '这里是node想传给服务端的数据' };
         const factory = React.createFactory(js);
-        console.log('factory', factory);
         const html = renderToString(factory(data));
         template = template.replace(/<div id="main"><\/div>/g,
             `
