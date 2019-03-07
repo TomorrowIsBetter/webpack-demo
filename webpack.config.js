@@ -40,5 +40,8 @@ module.exports = {
         inline: true,
         open: true,
         hot: true,
+        // 加上这个参数，可以使在客户端定位到路由的时候刷新，也不会返回404
+        // https://www.thinktxt.com/react/2017/02/26/react-router-browserHistory-refresh-404-solution.html
+        historyApiFallback: true,
     },
 };

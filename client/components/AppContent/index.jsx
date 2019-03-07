@@ -1,47 +1,35 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import './index.less';
+
+import { Switch, Route, Link } from 'react-router-dom';
+
+// 组件
+import PromiseModule from '../PromiseModule/index.js';
+import Home from '../Home/index.js';
+
 class App extends Component {
     constructor (props) {
         super(props);
         console.log('props', props);
     }
 
-    static async getInitialProps () {
-
-        const data = await new Promise((resolve, reject)=>{
-            setTimeout(() => {
-                resolve({
-                    name: '00233222',
-                });
-            }, 3000);
-
-        });
-        return data;
-
-    }
-
-    componentDidMount () {
-        console.log('this.props', this.props);
-    }
-
-    handleClick () {
-        console.log('done done', this.props);
-    }
-    handleBtnClick () {
-        console.log('点击的是一个按钮');
-    }
     render () {
         return (
-            <div className="app-container" >
-                <header className="App-header" onClick={() => this.handleClick()}>
-                    <h1 className="App-title">Welcome to React</h1>
-                    <button onClick={() => this.handleBtnClick()}>这里是一个按钮</button>
-                </header>
-                <p className="App-intro">
-                    Is my application rendered by server or client?
-                </p>
-                <div>这里是后端传过来的数据：{this.props.name}</div>
+            <div className="app-container">
+                <div><Link to="/">Home</Link></div>
+                <div><Link to="/promise">Promise</Link></div>
+
+                <Switch>
+                    <Route exact path='/roster' component={Home}/>
+                    <Route path='/roster/:number' component={PromiseModule}/>
+                </Switch>
+
+                <Switch>
+                    <Route exact path="/" component={Home}/>
+                    <Route path="/promise" component={PromiseModule}/>
+                </Switch>
+
             </div>
         );
     }

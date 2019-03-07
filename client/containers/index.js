@@ -1,6 +1,8 @@
 import React from 'react';
 import App from '../components/AppContent/index.jsx';
 import { hydrate, render } from 'react-dom';
+
+import { BrowserRouter, HashRouter } from 'react-router-dom';
 class Launcher {
     constructor (App) {
         this.App = App;
@@ -11,7 +13,9 @@ class Launcher {
         if (isBrowser) {
             const bootstrap = window.isRendered ? hydrate : render;
             bootstrap(
-                <App {...window.data}/>, document.getElementById('main')
+                (<BrowserRouter>
+                    <App {...window.data}/>
+                </BrowserRouter>), document.getElementById('main')
             );
         }
         return this.App;
