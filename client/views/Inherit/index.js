@@ -2,23 +2,22 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import './index.less';
 
-class PromiseModule extends Component {
+class Home extends Component {
     constructor (props) {
         super(props);
     }
 
     render () {
-        console.log('ininin');
         return (
             <div>
-                这里是Promise组件
+                这里是Inherit组件
             </div>
         );
     }
 }
 
-PromiseModule.propTypes = {
+Home.propTypes = {
     name: PropTypes.string,
 };
 
-export default PromiseModule;
+export default Home;

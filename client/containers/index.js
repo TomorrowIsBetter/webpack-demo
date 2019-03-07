@@ -2,7 +2,16 @@ import React from 'react';
 import App from '../components/AppContent/index.jsx';
 import { hydrate, render } from 'react-dom';
 
-import { BrowserRouter, HashRouter } from 'react-router-dom';
+import { BrowserRouter, StaticRouter } from 'react-router-dom';
+
+function createApp (context, url, props) {
+    return (
+        <StaticRouter context={context} location={url}>
+            <App {...props}/>
+        </StaticRouter>
+    );
+}
+
 class Launcher {
     constructor (App) {
         this.App = App;
@@ -18,7 +27,9 @@ class Launcher {
                 </BrowserRouter>), document.getElementById('main')
             );
         }
-        return this.App;
+        return {
+            createApp,
+        };
     }
 }
 

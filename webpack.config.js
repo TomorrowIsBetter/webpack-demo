@@ -44,4 +44,8 @@ module.exports = {
         // https://www.thinktxt.com/react/2017/02/26/react-router-browserHistory-refresh-404-solution.html
         historyApiFallback: true,
     },
+    // 下列文件不需要加后缀
+    resolve: {
+        extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
+    },
 };
