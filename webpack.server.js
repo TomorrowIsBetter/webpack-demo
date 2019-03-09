@@ -11,6 +11,7 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, './output'),
         filename: 'server.js',
+        publicPath: './output/',
         // 之前一直有问题，是这里，node要对应成require
         libraryTarget: 'commonjs2', // 打包成commonjs2规范
     },

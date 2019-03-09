@@ -1,9 +1,10 @@
-import Promise from '../views/Promise';
-import Inherit from '../views/Inherit';
-import Home from '../views/Home';
-
 import React from 'react';
 import { Route } from 'react-router-dom';
+import loadable from '@loadable/component';
+
+const Inherit = loadable(() => import('../views/inherit'));
+const Promise = loadable(() => import('../views/promise'));
+const Home = loadable(() => import('../views/home'));
 
 
 export const router = [

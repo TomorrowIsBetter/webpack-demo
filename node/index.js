@@ -6,6 +6,8 @@ const bodyParser = require('body-parser');
 const app = express();
 const { renderToString } = require('react-dom/server');
 
+const { ChunkExtractor, ChunkExtractorManager } = require('@loadable/server');
+
 
 // body-parser是对发出请求做出处理，处理编码等
 app.use(bodyParser.json());
@@ -28,11 +30,14 @@ if (process.env.NODE_ENV !== 'production') {
 
         const context = {};
         const component = createApp(context, req.path, data);
-        const html = renderToString(component);
+        const statsFile = path.resolve(__dirname, '../output/loadable-stats.json');
+        const extractor = new ChunkExtractor({ statsFile });
+        const jsx = extractor.collectChunks(component);
+        const html = renderToString(jsx);
         template = template.replace(/<div id="main"><\/div>/g,
             `
                 <div id="main">${html}</div>
-                <script type="text/javascript">window.data = ${JSON.stringify(data)};window.isRendered=true;</script>
+                <script type="text/javascript">window.data = ${JSON.stringify(data)};window.isRendered=true;</script>${extractor.getScriptTags()}
             `
         );
         // @TODO：处理404状态

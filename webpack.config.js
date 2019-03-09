@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const webpack = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const LoadablePlugin = require('@loadable/webpack-plugin');
 
 // 分离css文件需要注意：MiniCssExtractPlugin这个不能和style-loader同用，因为后者是把css通过内联放到html里面
 
@@ -10,8 +11,8 @@ module.exports = {
     entry: path.resolve(__dirname, './client/containers/index.js'),
     devtool: 'source-map',
     output: {
-        path: path.resolve(__dirname, './output'),
-        publicPath: '/output',
+        path: path.resolve(__dirname, './output/'),
+        publicPath: './output/',
         filename: 'index.js',
     },
     module: {
@@ -31,6 +32,7 @@ module.exports = {
         }),
         new webpack.HotModuleReplacementPlugin(),
         new MiniCssExtractPlugin(),
+        new LoadablePlugin(),
     ],
     target: 'web',
     devServer: {

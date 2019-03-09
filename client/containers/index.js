@@ -3,6 +3,7 @@ import App from '../components/AppContent/index.jsx';
 import { hydrate, render } from 'react-dom';
 
 import { BrowserRouter, StaticRouter } from 'react-router-dom';
+import { loadableReady } from '@loadable/component';
 
 function createApp (context, url, props) {
     return (
@@ -21,11 +22,11 @@ class Launcher {
         const isBrowser = process.env.TARGET !== 'node';
         if (isBrowser) {
             const bootstrap = window.isRendered ? hydrate : render;
-            bootstrap(
+            loadableReady().then(bootstrap(
                 (<BrowserRouter>
                     <App {...window.data}/>
                 </BrowserRouter>), document.getElementById('main')
-            );
+            ));
         }
         return {
             createApp,
