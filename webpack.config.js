@@ -8,11 +8,13 @@ const LoadablePlugin = require('@loadable/webpack-plugin');
 // 分离css文件需要注意：MiniCssExtractPlugin这个不能和style-loader同用，因为后者是把css通过内联放到html里面
 
 module.exports = {
-    entry: path.resolve(__dirname, './client/containers/index.js'),
+    entry: [
+        'webpack-hot-middleware/client',
+        path.resolve(__dirname, './client/containers/index.js'),
+    ],
     devtool: 'source-map',
     output: {
         path: path.resolve(__dirname, './output/'),
-        publicPath: './output/',
         filename: 'index.js',
     },
     module: {
@@ -36,7 +38,7 @@ module.exports = {
     ],
     target: 'web',
     devServer: {
-        contentBase: path.join(__dirname, './output'),
+        contentBase: path.join(__dirname, './'),
         port: 3000,
         compress: false,
         inline: true,

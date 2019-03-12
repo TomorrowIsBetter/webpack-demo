@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack-dev-server --mode=development",
+    "dev": "webpack-dev-server --mode=development --inline --open",
     "webpack": "cross-env BABEL_ENV=browser webpack --mode=development",
     "build": "webpack --mode=production --config webpack.prod.config.js",
     "clean": "rm -rf ./output",
