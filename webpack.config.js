@@ -20,7 +20,7 @@ module.exports = {
     module: {
         rules: [
             { test: /\.jsx$|\.js$/, exclude: /node_modules/, use: { loader: 'babel-loader' } },
-            { test: /\.css$|.less$/, exclude: /node_modules/, use: [MiniCssExtractPlugin.loader, 'css-loader'] },
+            { test: /\.less$/, exclude: /node_modules/, use: [MiniCssExtractPlugin.loader, 'css-loader', 'less-loader'] },
             { test: /\.png$|\.jpeg$|\.jpg$/, exclude: /node_modules/, use: { loader: 'file-loader' } },
             { test: /\.html$/, exclude: /node_modules/, use: [{ loader: 'html-loader' }] },
         ],
