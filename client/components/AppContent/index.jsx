@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import './index.less';
 
-import { Switch, Link, Redirect } from 'react-router-dom';
+import { Switch, Link } from 'react-router-dom';
 
 import { router, WrappedRoutes } from '../../router';
 
@@ -17,12 +17,12 @@ class App extends Component {
                 <div><Link to="/">Home</Link></div>
                 <div><Link to="/inherit">inherit</Link></div>
                 <div><Link to="/promise">Promise</Link></div>
+                <div><Link to="/hook">Hook</Link></div>
 
                 <Switch>
                     {router.map((v, key) => (
                         <WrappedRoutes {...v} key={key}></WrappedRoutes>
                     ))}
-                    <Redirect from="/" to="/promise" exact={true} />
                 </Switch>
 
             </div>

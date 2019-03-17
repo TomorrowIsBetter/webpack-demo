@@ -2,15 +2,20 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 import loadable from '@loadable/component';
 
-const Inherit = loadable(() => import('../views/inherit'));
-const Promise = loadable(() => import('../views/promise'));
-const Home = loadable(() => import('../views/home'));
+// 这里真的是够乌龙的，mac对大小写不敏感。这里之前写的是小写，mac里面可以将这个加载出来，但是在webpack监听的时候还是监听
+// 的小写的组件，小写组件对应的是找不到的，所以触发不了重新编译，也触发不了热更新
+
+const Inherit = loadable(() => import('../views/Inherit'));
+const Promise = loadable(() => import('../views/Promise'));
+const Home = loadable(() => import('../views/Home'));
+const Hook = loadable(() => import('../views/Hook'));
 
 
 export const router = [
     {
-        path: '/home',
+        path: '/',
         component: Home,
+        exact: true,
     }, {
         path: '/inherit',
         component: Inherit,
@@ -23,6 +28,9 @@ export const router = [
                 component: Home,
             },
         ],
+    }, {
+        path: '/hook',
+        component: Hook,
     },
 ];
 

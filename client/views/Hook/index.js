@@ -10,7 +10,7 @@ class Home extends Component {
     render () {
         return (
             <div>
-               这里是Home组件
+                <div>这里是Hook使用</div>
             </div>
         );
     }
