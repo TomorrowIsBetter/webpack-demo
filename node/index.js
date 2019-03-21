@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 const app = express();
 const { renderToString } = require('react-dom/server');
 
-const { ChunkExtractor, ChunkExtractorManager } = require('@loadable/server');
+const { ChunkExtractor } = require('@loadable/server');
 
 
 // body-parser是对发出请求做出处理，处理编码等
