@@ -31,6 +31,7 @@ if (!isProd) {
     const devServer = require('./dev-server');
     readyPromise = devServer(app, ({ clientEntryFileMap, serverEntryFile }) => {
         const { template, clientJSON } = clientEntryFileMap || {};
+        console.log('template', template);
         goujianParams = new Renderer(template, clientJSON, serverEntryFile);
     });
 }
@@ -45,7 +46,7 @@ if (!isProd) {
             const extractor = new ChunkExtractor({ stats: clientJSON, entrypoints: ['main'] });
             const jsx = extractor.collectChunks(component);
             const html = renderToString(jsx);
-            console.log('html', html);
+            console.log('template', template);
 
             const resultTemplate = template.replace(/<div id="main"><\/div>/g,
                 `

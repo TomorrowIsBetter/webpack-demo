@@ -9,7 +9,7 @@
     "build": "webpack --mode=production --config webpack.prod.config.js",
     "clean": "rm -rf ./output",
     "dev_node": "npm run webpack && cross-env BABEL_ENV=node webpack --config webpack.server.js",
-    "node": "cross-env BABEL_ENV=node NODE_ENV=development nodemon ./node/index.js"
+    "node": "cross-env NODE_ENV=development node ./node/index.js"
   },
   "author": "",
   "license": "ISC",
