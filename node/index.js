@@ -5,8 +5,8 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const app = express();
 const { renderToString } = require('react-dom/server');
-
 const { ChunkExtractor } = require('@loadable/server');
+const isProd = process.env.NODE_ENV === 'production';
 
 
 // body-parser是对发出请求做出处理，处理编码等
@@ -18,51 +18,46 @@ app.set('view', path.resolve(__dirname, '../output'));
 
 
 const data = { name: '这里是node想传给服务端的数据' };
+const context = {};
+let goujianParams, readyPromise;
 
-if (process.env.NODE_ENV !== 'production') {
-    app.use('/output', express.static(path.join(__dirname, '../output')));
+function Renderer (template, clientJSON, serverEntryFile) {
+    this.template = template;
+    this.clientJSON = clientJSON;
+    this.serverEntryFile = serverEntryFile;
+}
 
-    let template = fs.readFileSync(path.resolve(__dirname, '../output/index.html'), 'utf8');
-    const createApp = require(path.join(__dirname, '../output/server.js')).default.createApp;
+if (!isProd) {
+    const devServer = require('./dev-server');
+    readyPromise = devServer(app, ({ clientEntryFileMap, serverEntryFile }) => {
+        const { template, clientJSON } = clientEntryFileMap || {};
+        goujianParams = new Renderer(template, clientJSON, serverEntryFile);
+    });
+}
 
+if (!isProd) {
     app.get('*', function (req, res) {
-        console.log('req.path', req.path);
+        readyPromise.then(() => {
+            const template  = goujianParams.template || {};
+            const clientJSON  = goujianParams.clientJSON || {};
+            const { createApp } = goujianParams.serverEntryFile || {};
+            const component = createApp(context, req.path, data);
+            const extractor = new ChunkExtractor({ stats: clientJSON, entrypoints: ['main'] });
+            const jsx = extractor.collectChunks(component);
+            const html = renderToString(jsx);
+            console.log('html', html);
 
-        const context = {};
-        const component = createApp(context, req.path, data);
-        const statsFile = path.resolve(__dirname, '../output/loadable-stats.json');
-        const extractor = new ChunkExtractor({ statsFile });
-        const jsx = extractor.collectChunks(component);
-        const html = renderToString(jsx);
-        template = template.replace(/<div id="main"><\/div>/g,
-            `
+            const resultTemplate = template.replace(/<div id="main"><\/div>/g,
+                `
                 <div id="main">${html}</div>
                 <script type="text/javascript">window.data = ${JSON.stringify(data)};window.isRendered=true;</script>${extractor.getScriptTags()}
             `
-        );
-        // @TODO：处理404状态
-        console.log('context', context);
-        // 服务端路由是静态的，context里面存储了初始路由发生重定向等内容改变之后的信息，通过判断这个信息，从而处理
-        if (context.url) {
-            res.redirect(context.url);
-            return;
-        }
-        res.set('Content-Type', 'text/html');
-        res.send(template);
-
+            );
+            res.set('Content-Type', 'text/html');
+            res.send(resultTemplate);
+        });
     });
 
-
-    // 服务端渲染(不添加数据)
-    // const html = renderToString(<App />);
-
-
-} else {
-    // 这里跑单页面
-    app.use(express.static(__dirname + '/output'));
-    app.get('*', function (req, res) {
-        res.sendFile(path.join(__dirname, 'ouput/index.html'));
-    });
 }
 
 app.listen(3001, () => {

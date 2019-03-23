@@ -36,6 +36,7 @@ module.exports = {
         new MiniCssExtractPlugin(),
         new LoadablePlugin(),
     ],
+    mode: 'development',
     target: 'web',
     devServer: {
         contentBase: path.join(__dirname, './'),
