@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "webpack-dev-server --mode=development --inline",
     "webpack": "cross-env BABEL_ENV=browser webpack --mode=development",
-    "build": "webpack --config webpack.prod.config.js && webpack --config webpack.server.js",
+    "build": "webpack --config ./build/webpack.prod.js",
     "build_node": "cross-env NODE_ENV=production node ./node/index.js",
     "clean": "rm -rf ./output",
     "dev_node": "npm run webpack && cross-env BABEL_ENV=node webpack --config webpack.server.js",
@@ -25,7 +25,8 @@
     "react-dom": "^16.8.3",
     "react-router-config": "^4.4.0-beta.6",
     "react-router-dom": "^4.3.1",
-    "uglify-es": "^3.3.9"
+    "uglify-es": "^3.3.9",
+    "webpack-merge": "^4.2.1"
   },
   "devDependencies": {
     "@babel/core": "^7.3.3",

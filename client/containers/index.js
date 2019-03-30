@@ -5,6 +5,8 @@ import { hydrate, render } from 'react-dom';
 import { BrowserRouter, StaticRouter } from 'react-router-dom';
 import { loadableReady } from '@loadable/component';
 
+console.log('BABEL_ENV', process.env.BABEL_ENV);
+
 function createApp (context, url, props) {
     return (
         <StaticRouter context={context} location={url}>
