@@ -24,7 +24,6 @@ class App extends Component {
                         <WrappedRoutes {...v} key={key}></WrappedRoutes>
                     ))}
                 </Switch>
-
             </div>
         );
     }

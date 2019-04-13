@@ -5,12 +5,10 @@
   "main": "index.js",
   "scripts": {
     "dev": "webpack-dev-server --mode=development --inline",
-    "webpack": "cross-env BABEL_ENV=browser webpack --mode=development",
-    "build": "webpack --config ./build/webpack.prod.js",
-    "build_node": "cross-env NODE_ENV=production node ./node/index.js",
     "clean": "rm -rf ./output",
-    "dev_node": "npm run webpack && cross-env BABEL_ENV=node webpack --config webpack.server.js",
-    "node": "cross-env NODE_ENV=development node ./node/index.js"
+    "node": "cross-env NODE_ENV=development node ./node/index.js",
+    "build": "cross-env NODE_ENV=production webpack --config ./build/webpack.prod.js",
+    "build_node": "cross-env NODE_ENV=production node ./node/index.js"
   },
   "author": "",
   "license": "ISC",

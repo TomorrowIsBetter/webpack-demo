@@ -7,6 +7,8 @@ const webpackMerge = require('webpack-merge');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 // 将node_modules中的文件不打入包中，保留为require()引入
+const LoadablePlugin = require('@loadable/webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
 
 
@@ -29,10 +31,17 @@ module.exports = [
             publicPath: './output',
             path: path.resolve(__dirname, '../output/client'),
         },
+        mode: 'production',
         plugins: [
             new MiniCssExtractPlugin(),
+            new LoadablePlugin(),
             new webpack.DefinePlugin({
-                'process.env.BABEL_ENV': JSON.stringify('web'),
+                'process.env.TARGET': JSON.stringify('browser'),
+            }),
+            new HtmlWebpackPlugin({
+                title: 'webpack-demo-init',
+                template: path.resolve(__dirname, '../client/static/index.html'),
+                filename: 'index.html',
             }),
         ],
         optimization,
@@ -46,13 +55,9 @@ module.exports = [
         },
         plugins: [
             new MiniCssExtractPlugin(),
-            new webpack.DefinePlugin({
-                'process.env.BABEL_ENV': JSON.stringify('node'),
-            }),
         ],
-        externals: [
-            nodeExternals(),
-        ],
+        mode: 'production',
+        externals: [nodeExternals()],
         optimization,
     }),
 ];

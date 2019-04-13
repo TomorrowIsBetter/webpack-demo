@@ -34,7 +34,7 @@ module.exports = [
             }),
             // new webpack.HotModuleReplacementPlugin(),
             new webpack.DefinePlugin({
-                'process.env.BABEL_ENV': JSON.stringify('web'),
+                'process.env.TARGET': JSON.stringify('browser'),
             }),
             new MiniCssExtractPlugin(),
             new LoadablePlugin(),
@@ -53,9 +53,6 @@ module.exports = [
         externals: [nodeExternals()], // 不绑定node模块，保留为 require()
         plugins: [
             new MiniCssExtractPlugin(),
-            new webpack.DefinePlugin({
-                'process.env.BABEL_ENV': JSON.stringify('node'), // 指定React环境为服务端
-            }),
         ],
     }),
 ];

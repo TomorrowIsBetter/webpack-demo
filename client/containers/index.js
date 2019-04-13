@@ -5,8 +5,6 @@ import { hydrate, render } from 'react-dom';
 import { BrowserRouter, StaticRouter } from 'react-router-dom';
 import { loadableReady } from '@loadable/component';
 
-console.log('BABEL_ENV', process.env.BABEL_ENV);
-
 function createApp (context, url, props) {
     return (
         <StaticRouter context={context} location={url}>
@@ -21,14 +19,14 @@ class Launcher {
     }
 
     render () {
-        const isBrowser = process.env.TARGET !== 'node';
+        const isBrowser = process.env.TARGET === 'browser';
         if (isBrowser) {
             const bootstrap = window.isRendered ? hydrate : render;
             loadableReady().then(bootstrap(
                 (<BrowserRouter>
                     <App {...window.data}/>
                 </BrowserRouter>), document.getElementById('main')
-            ));
+            )).catch(err => console.log(err));
         }
         return {
             createApp,
